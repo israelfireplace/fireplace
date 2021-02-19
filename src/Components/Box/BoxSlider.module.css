@@ -1,0 +1,41 @@
+.fadeIn {
+  animation: fadeIn .8s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+/**
+   * ----------------------------------------
+   * animation fadeIn
+   * ----------------------------------------
+   */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut .6s ease-out both;
+}
+
+/**
+   * ----------------------------------------
+   * animation fadeOut
+   * ----------------------------------------
+   */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.boxSlide {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-position: center;
+}

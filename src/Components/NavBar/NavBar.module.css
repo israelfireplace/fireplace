@@ -1,0 +1,57 @@
+@media only screen and (max-width: 768px) {
+  .slideInRight {
+    animation: slideInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(300px);
+      right: -300;
+    }
+    100% {
+      transform: translateX(0);
+      right: 0px;
+    }
+  }
+
+  .slideOutRight {
+    animation: slideOutRight 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  }
+
+  @keyframes slideOutRight {
+    0% {
+      transform: translateX(0);
+      right: 0px;
+    }
+    100% {
+      transform: translateX(300px);
+      right: -300;
+    }
+  }
+}
+
+.slideUp {
+  animation: slideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+}
+
+.slideDown {
+  animation: slideDown 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

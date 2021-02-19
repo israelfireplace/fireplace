@@ -1,0 +1,19 @@
+.box-link {
+  margin-top: 20px;
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  outline: none;
+  padding: 10px 25px;
+  text-decoration: none;
+  transition: background 0.4s;
+  &:hover {
+    background: white;
+    color: var(--goldColor) !important;
+  }
+}

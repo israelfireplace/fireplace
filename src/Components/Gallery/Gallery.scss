@@ -1,0 +1,117 @@
+.gallery-container {
+  position: relative;
+  .headerContainer {
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    position: fixed;
+  }
+
+}
+
+.gallery-lower_container {
+  height: fit-content !important;
+  .col,
+  .col-md-4 {
+    padding: 0px;
+    padding-top: 10px;
+    position: relative;
+    margin-bottom: 5px;
+    .gallery-item {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      cursor: pointer;
+      img {
+        transition: transform 1s;
+        width: 100%;
+        height: 100%;
+        vertical-align: bottom;
+        top: 0;
+        left: 0;
+        position: relative;
+      }
+      .item-overlay {
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.6s;
+        background: rgba(0, 0, 0, 0.6);
+        text-align: center;
+        .item-text-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          .item-text {
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            transition: ease 0.4s;
+            margin: auto;
+            margin-top: 30%;
+            width: 70%;
+          }
+        }
+      }
+      &:hover {
+        img {
+          transform: scale(1.5);
+        }
+        .item-overlay {
+          opacity: 1;
+        }
+        .item-text-container {
+          .item-text {
+            animation: puff-in-center 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+          }
+        }
+      }
+    }
+  }
+}
+
+.search-gallery-container {
+  .search-results {
+    width: fit-content;
+    margin: auto;
+    margin-top: -20px;
+    margin-bottom: 5px;
+    color: var(--fontLighterColor);
+  }
+
+  .search-noResultFound {
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+  }
+}
+
+@keyframes puff-in-center {
+  0% {
+    transform: scale(1.2);
+    filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .gallery-container {
+    .gallery-lower_container {
+      .col-md-4 {
+        padding: 10px 10px 0px 10px;
+      }
+    }
+  }
+}

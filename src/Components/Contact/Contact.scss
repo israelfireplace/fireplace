@@ -1,0 +1,82 @@
+.contact-container {
+  max-width: 800px;
+
+  .contact-right-col {
+    border-left: 1px solid rgb(199, 199, 199);
+  }
+
+  .contact-left-col {
+    text-align: center;
+    align-items: center;
+    padding: 40px;
+    padding-top: 0px;
+    .contact-icon-container {
+      width: 100%;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 60px;
+      img {
+        cursor: pointer;
+        width: 45px;
+      }
+      p {
+        text-align: center;
+        width: fit-content;
+        margin: 20px auto;
+      }
+    }
+  }
+
+  .contact-header-container {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+    align-items: center;
+    .border-header {
+      border-bottom: var(--goldColor) solid 2px;
+      border-top: var(--goldColor) solid 2px;
+      width: fit-content;
+    }
+    .contact-header {
+      margin: auto;
+    }
+  }
+  form {
+    margin-top: 50px;
+    .form-row > .form-row-col {
+      padding-right: 30px;
+    }
+    .form-control:valid {
+      border: 1px solid var(--goldColor);
+      background-image: none;
+    }
+    input,
+    textarea {
+      border: 1px solid var(--goldColor);
+      border-radius: 0px;
+    }
+    input {
+      padding: 15px;
+      height: 45px;
+    }
+    textarea {
+      height: 150px;
+    }
+    .submit-button {
+      border: 1px solid;
+      border-color: rgba(51, 51, 51, 0.3);
+      background: transparent;
+      &:hover {
+        color: white;
+        background: var(--goldColor);
+      }
+    }
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 844px) {
+  .contact-left-col {
+    margin-top: 50px;
+  }
+}
