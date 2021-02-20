@@ -2,7 +2,9 @@ const path = require("path");
 const fs = require("fs");
 
 const dirPathProducts = path.join(__dirname, "../products");
-let postlist = [];
+const dirPathMainPageSections = path.join(__dirname, "../mainPageSections");
+let productslist = [];
+let mainPageSectionsList = [];
 
 const months = {
   "01": "January",
@@ -62,7 +64,6 @@ const getProducts = () => {
           if (metadataIndices.length > 0) {
             let metadata = lines.slice(metadataIndices[0] + 1, metadataIndices[1]);
             metadata.forEach((line, index) => {
-              console.log(line);
               try {
                 if (metadata[index + 1].includes("-") && !isTempArr) {
                   isTempArr = true;
@@ -107,7 +108,7 @@ const getProducts = () => {
         const content = parseContent({ lines, metadataIndices });
         let currId = getTimeStemp(metadata);
         post = {
-          id: getTimeStemp(metadata),
+          id: currId,
           header: metadata.header ? metadata.header : "No header given",
           tags: metadata.tags,
           featuresList: metadata.featuresList,
@@ -120,10 +121,10 @@ const getProducts = () => {
           url: `/itempage/${currId}`,
           content: content ? content : "No content given",
         };
-        postlist.push(post);
+        productslist.push(post);
         ilist.push(i);
         if (ilist.length === files.length) {
-          const sortedList = postlist.sort((a, b) => {
+          const sortedList = productslist.sort((a, b) => {
             return a.id < b.id ? 1 : -1;
           });
           let data = JSON.stringify(sortedList);
@@ -135,4 +136,84 @@ const getProducts = () => {
   return;
 };
 
+const getMainPageSections = () => {
+  fs.readdir(dirPathMainPageSections, (err, files) => {
+    if (err) {
+      return console.log("Failed to list contents of directory: " + err);
+    }
+    let ilist = [];
+    let tempField = "";
+    let isTempArr = false;
+    files.forEach((file, i) => {
+      let obj = {};
+      let post;
+      fs.readFile(`${dirPathMainPageSections}/${file}`, "utf8", (err, contents) => {
+        const getMetadataIndices = (acc, elem, i) => {
+          if (/^---/.test(elem)) {
+            acc.push(i);
+          }
+          return acc;
+        };
+        const parseMetadata = ({ lines, metadataIndices }) => {
+          if (metadataIndices.length > 0) {
+            let metadata = lines.slice(metadataIndices[0] + 1, metadataIndices[1]);
+            metadata.forEach((line, index) => {
+              try {
+                if (metadata[index + 1].includes("-") && !isTempArr) {
+                  isTempArr = true;
+                  tempField = line.split(":")[0];
+                } else if (
+                  metadata[index + 1].includes("-") &&
+                  metadata[index - 1].includes("-") &&
+                  !metadata[index].includes("-")
+                ) {
+                  isTempArr = true;
+                  tempField = line.split(":")[0];
+                } else if (metadata[index].includes("-")) {
+                  isTempArr = true;
+                } else {
+                  isTempArr = false;
+                }
+              } catch (e) {}
+
+              if (isTempArr) {
+                if (line.split("- ")[1]) {
+                  if (typeof obj[tempField] !== "object") {
+                    obj[tempField] = [];
+                  }
+                  obj[tempField].push(line.split("- ")[1]);
+                }
+              } else {
+                obj[line.split(": ")[0]] = line.split(": ")[1];
+              }
+            });
+            return obj;
+          }
+        };
+
+        const lines = contents.split("\n");
+        const metadataIndices = lines.reduce(getMetadataIndices, []);
+        const metadata = parseMetadata({ lines, metadataIndices });
+        let currId = getTimeStemp(metadata);
+        post = {
+          id: currId,
+          title: metadata.header ? metadata.header : "No title given",
+          paragraph: metadata.paragraph ? metadata.paragraph : "No paragraph given",
+        };
+        mainPageSectionsList.push(post);
+        ilist.push(i);
+        if (ilist.length === files.length) {
+          const sortedList = mainPageSectionsList.sort((a, b) => {
+            return a.id < b.id ? 1 : -1;
+          });
+          let data = JSON.stringify(sortedList);
+          fs.writeFileSync("src/mainPageSections.json", data);
+        }
+      });
+    });
+  });
+  return;
+};
+
 getProducts();
+getMainPageSections();
