@@ -24,7 +24,7 @@ const Landing = () => {
             shadow={"0.4"}
             image={item.image}
             header={item.title}
-            text={item.paragraph}
+            text={item.body}
             buttonLink={"/gallery"}
             buttonText={"לגלריה"}
             side={index % 2 === 0 ? "left" : "right"}

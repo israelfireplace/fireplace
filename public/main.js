@@ -197,7 +197,7 @@ const getMainPageSections = () => {
         post = {
           id: currId,
           title: metadata.title ? metadata.title : "No title given",
-          paragraph: metadata.paragraph ? metadata.paragraph : "No paragraph given",
+          body: metadata.body ? metadata.body : "No paragraph given",
           image: metadata.image,
         };
         mainPageSectionsList.push(post);
