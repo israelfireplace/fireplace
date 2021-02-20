@@ -7,33 +7,33 @@ const dirPathMainPageSections = path.join(__dirname, "../mainPageSections");
 let productslist = [];
 let mainPageSectionsList = [];
 
-const months = {
-  "01": "January",
-  "02": "February",
-  "03": "March",
-  "04": "April",
-  "05": "May",
-  "06": "June",
-  "07": "July",
-  "08": "August",
-  "09": "September",
-  10: "October",
-  11: "November",
-  12: "December",
-};
+// const months = {
+//   "01": "January",
+//   "02": "February",
+//   "03": "March",
+//   "04": "April",
+//   "05": "May",
+//   "06": "June",
+//   "07": "July",
+//   "08": "August",
+//   "09": "September",
+//   10: "October",
+//   11: "November",
+//   12: "December",
+// };
 
-const formatDate = (date) => {
-  const datetimeArray = date.split("T");
-  const dateArray = datetimeArray[0].split("-");
-  const timeArray = datetimeArray[1].split(":");
-  const month = dateArray[1];
-  const monthName = months[dateArray[1]];
-  const day = dateArray[2];
-  const year = dateArray[0];
-  const time = `${timeArray[0]}:${timeArray[1]}`;
+// const formatDate = (date) => {
+//   const datetimeArray = date.split("T");
+//   const dateArray = datetimeArray[0].split("-");
+//   const timeArray = datetimeArray[1].split(":");
+//   const month = dateArray[1];
+//   const monthName = months[dateArray[1]];
+//   const day = dateArray[2];
+//   const year = dateArray[0];
+//   const time = `${timeArray[0]}:${timeArray[1]}`;
 
-  return { month: month, monthName: monthName, day: day, year: year, time: time };
-};
+//   return { month: month, monthName: monthName, day: day, year: year, time: time };
+// };
 
 // const getTimeStemp = (metadata) => {
 //   const parsedDate = metadata.date ? formatDate(metadata.date) : new Date();
@@ -42,6 +42,14 @@ const formatDate = (date) => {
 //   const timestamp = date.getTime() / 1000;
 //   return timestamp;
 // };
+
+
+const parseContent = ({ lines, metadataIndices }) => {
+  if (metadataIndices.length > 0) {
+    lines = lines.slice(metadataIndices[1] + 1, lines.length);
+  }
+  return lines.join("\n");
+};
 
 const getProducts = () => {
   fs.readdir(dirPathProducts, (err, files) => {
@@ -66,9 +74,9 @@ const getProducts = () => {
             let metadata = lines.slice(metadataIndices[0] + 1, metadataIndices[1]);
             metadata.forEach((line, index) => {
               try {
-                let nextLineContain = metadata[index + 1].trim().charAt(0) === '-';
-                let currentLineContain = metadata[index].trim().charAt(0) === '-';
-                let previousLineContain = metadata[index - 1].trim().charAt(0) === '-';
+                let nextLineContain = metadata[index + 1].trim().charAt(0) === "-";
+                let currentLineContain = metadata[index].trim().charAt(0) === "-";
+                let previousLineContain = metadata[index - 1].trim().charAt(0) === "-";
                 if (nextLineContain && !currentLineContain) {
                   isTempArr = true;
                   tempField = line.split(":")[0];
@@ -96,12 +104,7 @@ const getProducts = () => {
             return obj;
           }
         };
-        const parseContent = ({ lines, metadataIndices }) => {
-          if (metadataIndices.length > 0) {
-            lines = lines.slice(metadataIndices[1] + 1, lines.length);
-          }
-          return lines.join("\n");
-        };
+        
         const lines = contents.split("\n");
         const metadataIndices = lines.reduce(getMetadataIndices, []);
         const metadata = parseMetadata({ lines, metadataIndices });
@@ -159,9 +162,9 @@ const getMainPageSections = () => {
             let metadata = lines.slice(metadataIndices[0] + 1, metadataIndices[1]);
             metadata.forEach((line, index) => {
               try {
-                let nextLineContain = metadata[index + 1].trim().charAt(0) === '-';
-                let currentLineContain = metadata[index].trim().charAt(0) === '-';
-                let previousLineContain = metadata[index - 1].trim().charAt(0) === '-';
+                let nextLineContain = metadata[index + 1].trim().charAt(0) === "-";
+                let currentLineContain = metadata[index].trim().charAt(0) === "-";
+                let previousLineContain = metadata[index - 1].trim().charAt(0) === "-";
                 if (nextLineContain && !currentLineContain) {
                   isTempArr = true;
                   tempField = line.split(":")[0];
@@ -189,15 +192,16 @@ const getMainPageSections = () => {
             return obj;
           }
         };
-
+        
         const lines = contents.split("\n");
         const metadataIndices = lines.reduce(getMetadataIndices, []);
         const metadata = parseMetadata({ lines, metadataIndices });
+        const content = parseContent({ lines, metadataIndices });
         let currId = uuidv4();
         post = {
           id: currId,
           title: metadata.title ? metadata.title : "No title given",
-          body: metadata.body ? metadata.body : "No paragraph given",
+          body: content,
           image: metadata.image,
         };
         mainPageSectionsList.push(post);
