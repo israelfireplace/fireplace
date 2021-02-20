@@ -197,7 +197,7 @@ const getMainPageSections = () => {
         let currId = getTimeStemp(metadata);
         post = {
           id: currId,
-          title: metadata.header ? metadata.header : "No title given",
+          title: metadata.title ? metadata.title : "No title given",
           paragraph: metadata.paragraph ? metadata.paragraph : "No paragraph given",
         };
         mainPageSectionsList.push(post);
