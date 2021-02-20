@@ -4,8 +4,6 @@ import { useLocation } from "react-router-dom";
 
 import fireplace1 from "../../images/fireplace1lg.jpg";
 
-import { productsList } from "../../JsonLists/itemsList";
-
 import  productsListCSM from "../../products.json";
 
 const mainHeader = "קונדימנטום קורוס בליקרה נונסט";
@@ -22,20 +20,20 @@ const mainText = (
 
 const MainGallery = () => {
   const location = useLocation();
-  const [galleryItemsCate, setGalleryItemsCate] = useState(productsList);
+  const [galleryItemsCate, setGalleryItemsCate] = useState(productsListCSM);
 
   useEffect(() => {
     const currLocation = location.pathname.split("/")[location.pathname.split("/").length - 1];
 
     if (currLocation.includes("variant")) {
       const variantId = currLocation.replace("variant", "");
-      setGalleryItemsCate(productsList.filter((variant) => `${variant.categorie.id}` === variantId));
+      setGalleryItemsCate(productsListCSM.filter((variant) => `${variant.categorie.id}` === variantId));
     } else {
-      setGalleryItemsCate(productsList);
+      setGalleryItemsCate(productsListCSM);
     }
   }, [location.pathname]);
 
-  return <Gallery mainHeader={mainHeader} mainText={mainText} mainImage={fireplace1} galleryItems={productsListCSM} />;
+  return <Gallery mainHeader={mainHeader} mainText={mainText} mainImage={fireplace1} galleryItems={galleryItemsCate} />;
 };
 
 export default MainGallery;

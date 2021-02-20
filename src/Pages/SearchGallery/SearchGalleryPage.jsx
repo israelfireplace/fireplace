@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import GallerySearch from "../../Components/Gallery/GallerySearch";
-import { productsList } from "../../JsonLists/itemsList";
+import  productsListCSM from "../../products.json";
 import { useLocation } from "react-router-dom";
 
 const SearchGalleryPage = () => {
   const location = useLocation();
-  const [galleryItemsCate, setGalleryItemsCate] = useState(productsList);
+  const [galleryItemsCate, setGalleryItemsCate] = useState(productsListCSM);
   const [searchText, setSearchText] = useState(location.pathname.split("/")[location.pathname.split("/").length - 1]);
 
   useEffect(() => {
     const currSearchText = location.pathname.split("/")[location.pathname.split("/").length - 1];
     setSearchText(currSearchText);
-    const filtredList = productsList.filter((item) => {
+    const filtredList = productsListCSM.filter((item) => {
       return (
         item.tags.includes(currSearchText) ||
         item.tags.some((v) => currSearchText.includes(v)) ||

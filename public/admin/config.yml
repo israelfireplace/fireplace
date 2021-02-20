@@ -20,19 +20,19 @@ collections:
           field: { name: tag, label: Tag, widget: string },
         }
       - {
-          label: "StyleList",
+          label: "Style List",
           name: "styleList",
           widget: "list",
           field: { name: style, label: Style, widget: string },
         }
       - {
-          label: "TypeOptionsList",
+          label: "Type Options List",
           name: "typeOptionsList",
           widget: "list",
           field: { name: type, label: Type, widget: string },
         }
       - {
-          label: "FeaturesList",
+          label: "Features List",
           name: "featuresList",
           widget: "list",
           field: { name: feature, label: feature, widget: string },
@@ -42,3 +42,11 @@ collections:
       - { label: "ImageLg", name: "imageLg", widget: "image" }
       - { label: "ImageSm", name: "imageSm", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }
+  - name: "mainPageSections" # Used in routes, e.g., /admin/collections/products
+    label: "Main Page Sections" # Used in the UI
+    folder: "mainPageSections" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{title}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Paragraph", name: "paragraph", widget: "string" }

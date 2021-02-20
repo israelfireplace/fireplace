@@ -46,7 +46,6 @@ const getProducts = () => {
       return console.log("Failed to list contents of directory: " + err);
     }
     let ilist = [];
-    let tempArr = [];
     let tempField = "";
     let isTempArr = false;
     files.forEach((file, i) => {
