@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 const dirPathProducts = path.join(__dirname, "../products");
 const dirPathMainPageSections = path.join(__dirname, "../mainPageSections");
@@ -66,17 +66,16 @@ const getProducts = () => {
             let metadata = lines.slice(metadataIndices[0] + 1, metadataIndices[1]);
             metadata.forEach((line, index) => {
               try {
-                if (metadata[index + 1].includes("-") && !isTempArr) {
+                let nextLineContain = metadata[index + 1].trim().charAt(0) === '-';
+                let currentLineContain = metadata[index].trim().charAt(0) === '-';
+                let previousLineContain = metadata[index - 1].trim().charAt(0) === '-';
+                if (nextLineContain && !currentLineContain) {
                   isTempArr = true;
                   tempField = line.split(":")[0];
-                } else if (
-                  metadata[index + 1].includes("-") &&
-                  metadata[index - 1].includes("-") &&
-                  !metadata[index].includes("-")
-                ) {
+                } else if (nextLineContain && previousLineContain && !currentLineContain) {
                   isTempArr = true;
                   tempField = line.split(":")[0];
-                } else if (metadata[index].includes("-")) {
+                } else if (currentLineContain) {
                   isTempArr = true;
                 } else {
                   isTempArr = false;
@@ -160,17 +159,16 @@ const getMainPageSections = () => {
             let metadata = lines.slice(metadataIndices[0] + 1, metadataIndices[1]);
             metadata.forEach((line, index) => {
               try {
-                if (metadata[index + 1].includes("-") && !isTempArr) {
+                let nextLineContain = metadata[index + 1].trim().charAt(0) === '-';
+                let currentLineContain = metadata[index].trim().charAt(0) === '-';
+                let previousLineContain = metadata[index - 1].trim().charAt(0) === '-';
+                if (nextLineContain && !currentLineContain) {
                   isTempArr = true;
                   tempField = line.split(":")[0];
-                } else if (
-                  metadata[index + 1].includes("-") &&
-                  metadata[index - 1].includes("-") &&
-                  !metadata[index].includes("-")
-                ) {
+                } else if (nextLineContain && previousLineContain && !currentLineContain) {
                   isTempArr = true;
                   tempField = line.split(":")[0];
-                } else if (metadata[index].includes("-")) {
+                } else if (currentLineContain) {
                   isTempArr = true;
                 } else {
                   isTempArr = false;
@@ -200,7 +198,7 @@ const getMainPageSections = () => {
           id: currId,
           title: metadata.title ? metadata.title : "No title given",
           paragraph: metadata.paragraph ? metadata.paragraph : "No paragraph given",
-          image: metadata.image
+          image: metadata.image,
         };
         mainPageSectionsList.push(post);
         ilist.push(i);
