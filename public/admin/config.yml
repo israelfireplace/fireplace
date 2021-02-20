@@ -38,9 +38,9 @@ collections:
           field: { name: feature, label: feature, widget: string },
         }
       - { label: "Categorie", name: "categorie", widget: "string" }
-      - { label: "ShortText", name: "shortText", widget: "string" }
-      - { label: "ImageLg", name: "imageLg", widget: "image" }
-      - { label: "ImageSm", name: "imageSm", widget: "image" }
+      - { label: "Short Text", name: "shortText", widget: "string" }
+      - { label: "Image Lg", name: "imageLg", widget: "image" }
+      - { label: "Image Sm", name: "imageSm", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }
   - name: "mainPageSections" # Used in routes, e.g., /admin/collections/products
     label: "Main Page Sections" # Used in the UI
@@ -50,3 +50,4 @@ collections:
     fields: # The fields for each document, usually in front matter
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Paragraph", name: "paragraph", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
