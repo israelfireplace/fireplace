@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
 
 const dirPathProducts = path.join(__dirname, "../products");
 const dirPathMainPageSections = path.join(__dirname, "../mainPageSections");
@@ -34,13 +35,13 @@ const formatDate = (date) => {
   return { month: month, monthName: monthName, day: day, year: year, time: time };
 };
 
-const getTimeStemp = (metadata) => {
-  const parsedDate = metadata.date ? formatDate(metadata.date) : new Date();
-  const datestring = `${parsedDate["year"]}-${parsedDate["month"]}-${parsedDate["day"]}T${parsedDate["time"]}:00`;
-  const date = new Date(datestring);
-  const timestamp = date.getTime() / 1000;
-  return timestamp;
-};
+// const getTimeStemp = (metadata) => {
+//   const parsedDate = metadata.date ? formatDate(metadata.date) : new Date();
+//   const datestring = `${parsedDate["year"]}-${parsedDate["month"]}-${parsedDate["day"]}T${parsedDate["time"]}:00`;
+//   const date = new Date(datestring);
+//   const timestamp = date.getTime() / 1000;
+//   return timestamp;
+// };
 
 const getProducts = () => {
   fs.readdir(dirPathProducts, (err, files) => {
@@ -106,7 +107,7 @@ const getProducts = () => {
         const metadataIndices = lines.reduce(getMetadataIndices, []);
         const metadata = parseMetadata({ lines, metadataIndices });
         const content = parseContent({ lines, metadataIndices });
-        let currId = getTimeStemp(metadata);
+        let currId = uuidv4();
         post = {
           id: currId,
           header: metadata.header ? metadata.header : "No header given",
@@ -194,7 +195,7 @@ const getMainPageSections = () => {
         const lines = contents.split("\n");
         const metadataIndices = lines.reduce(getMetadataIndices, []);
         const metadata = parseMetadata({ lines, metadataIndices });
-        let currId = getTimeStemp(metadata);
+        let currId = uuidv4();
         post = {
           id: currId,
           title: metadata.title ? metadata.title : "No title given",
